@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💌 Валентинка 14 февраля</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(145deg, #ffe6f0 0%, #ffb6c1 100%);
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 48px 20px 48px 20px;
+            box-shadow: 0 20px 35px rgba(200, 0, 80, 0.2);
+            padding: 40px 30px;
+            text-align: center;
+            border: 2px solid white;
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #b03052;
+            text-shadow: 2px 2px 0 #fff5f5;
+            margin-bottom: 20px;
+        }
+        .heart-deco {
+            font-size: 3rem;
+            line-height: 1;
+            margin-bottom: 10px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        label {
+            font-weight: 600;
+            color: #9f2b4a;
+            font-size: 1.2rem;
+        }
+        input {
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: 3px solid #ff99aa;
+            border-radius: 50px;
+            outline: none;
+            background: white;
+            text-align: center;
+            transition: 0.2s;
+        }
+        input:focus {
+            border-color: #d43f66;
+            box-shadow: 0 0 0 5px rgba(255, 120, 140, 0.3);
+        }
+        button {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 60px;
+            cursor: pointer;
+            border-bottom: 5px solid #b82c4a;
+            transition: 0.08s linear;
+            margin-top: 10px;
+        }
+        button:active {
+            border-bottom-width: 2px;
+            transform: translateY(3px);
+        }
+        .output {
+            margin-top: 30px;
+            font-size: 2rem;
+            font-weight: bold;
+            background: white;
+            padding: 25px;
+            border-radius: 40px;
+            box-shadow: inset 0 -3px 0 rgba(0,0,0,0.05);
+            border: 2px dashed #ff6f91;
+            word-break: break-word;
+        }
+        .small-message {
+            font-size: 1.2rem;
+            color: #5e2e3a;
+            margin-top: 15px;
+        }
+        .heart-symbol {
+            color: #ff1a4c;
+            font-size: 3.5rem;
+        }
+        a {
+            color: #b02c4a;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px dotted;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="heart-deco">❤️❤️❤️</div>
+        <h1>14 февраля</h1>
+        <p style="font-size:1.3rem; color:#632a3a;">Введите имя, чтобы получить валентинку</p>
+        
+        <div class="input-group">
+            <label>✏️ Твоё имя</label>
+            <input type="text" id="userName" placeholder="например, 'Аян' буэ или 'Аружан' крашиха" autofocus>
+            <button id="openBtn">💌 Получить открытку</button>
+        </div>
+
+        <!-- Здесь появится результат -->
+        <div id="resultBlock" class="output" style="display: none;"></div>
+        <div id="extraLink" class="small-message" style="display: none;"></div>
+    </div>
+<script>
+    const nameInput = document.getElementById('userName');
+    const btn = document.getElementById('openBtn');
+    const resultBlock = document.getElementById('resultBlock');
+    const extraLink = document.getElementById('extraLink');
+
+    function showHeartMessage(emoji, text) {
+        resultBlock.style.display = 'block';
+        resultBlock.innerHTML = `
+            <div class="heart-symbol">❤️</div>
+            <span style="font-size:1.8rem;">
+                ${emoji ? emoji + ' ' : ''}
+            </span><br>
+            <span style="font-size:1.7rem; color:#b01e4b;">
+                ${text}
+            </span>
+        `;
+        extraLink.style.display = 'none';
+    }
+
+    function redirectToSite(url) {
+        window.open(url, '_blank');
+        resultBlock.style.display = 'block';
+        resultBlock.innerHTML = `
+            ❤️ Перенаправляем...<br>
+            <small style="font-size:1rem;">
+                если сайт не открылся —
+                <a href="${url}" target="_blank">нажмите здесь</a>
+            </small>
+        `;
+        extraLink.style.display = 'none';
+    }
+
+    function handleName() {
+    let rawName = nameInput.value.trim();
+
+    if (rawName === '') {
+        alert('Пожалуйста, введите имя!');
+        return;
+    }
+
+    let formattedName = rawName.toLowerCase();
+
+    if (formattedName === 'аян') {
+        redirectToSite('https://m3.mangap.ru/genre/yaoi');
+    }
+    else if (formattedName === 'полина') {
+        redirectToSite('https://m3.mangap.ru/genre/yuri');
+    }
+    else if (formattedName === 'асем') {
+        showHeartMessage('🩺', 'шикарному врачу');
+    }
+    else if (formattedName === 'дания') {
+        showHeartMessage('🔪', 'с днем к@зни чикатило');
+    }
+    else if (formattedName === 'мади') {
+        showHeartMessage('💢', 'иди на х#й');
+    }
+    else if (formattedName === 'алтынай') {
+    resultBlock.style.display = 'block';
+    resultBlock.innerHTML = `
+        <div style="font-size:4rem;">💖</div>
+        <div style="font-size:1.6rem; color:#b01e4b;">
+            брат ты мне как сестра 💕
+        </div>
+    `;
+    extraLink.style.display = 'none';
+    }
+
+    else if (
+        formattedName === 'ерс' ||
+        formattedName === 'ерслан' ||
+        formattedName === 'ерсин'
+    ) {
+        showHeartMessage('🇰🇷', 'иди учи корейский');
+    }
+    else if (formattedName === 'аружан') {
+        showHeartMessage('✨', 'лучшему человеку');
+    }
+    else {
+        resultBlock.style.display = 'block';
+        resultBlock.innerHTML = `
+            ❤️ С 14 февраля, ${rawName}!<br>
+            <span style="font-size:1.2rem;">
+                Ты особенный(ая) 💕
+            </span>
+        `;
+        extraLink.style.display = 'none';
+    }
+}
+
+
+    btn.addEventListener('click', handleName);
+
+    nameInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            handleName();
+        }
+    });
+</script>
