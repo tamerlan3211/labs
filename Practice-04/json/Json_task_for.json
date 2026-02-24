@@ -1,0 +1,34 @@
+{
+  "imdata": [
+    {
+      "l1PhysIf": {
+        "attributes": {
+          "dn": "topology/pod-1/node-201/sys/phys-[eth1/33]",
+          "descr": "",
+          "speed": "",
+          "mtu": "9150"
+        }
+      }
+    },
+    {
+      "l1PhysIf": {
+        "attributes": {
+          "dn": "topology/pod-1/node-201/sys/phys-[eth1/34]",
+          "descr": "",
+          "speed": "",
+          "mtu": "9150"
+        }
+      }
+    },
+    {
+      "l1PhysIf": {
+        "attributes": {
+          "dn": "topology/pod-1/node-201/sys/phys-[eth1/35]",
+          "descr": "",
+          "speed": "",
+          "mtu": "9150"
+        }
+      }
+    }
+  ]
+}
