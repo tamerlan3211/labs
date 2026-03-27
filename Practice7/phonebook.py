@@ -1,4 +1,5 @@
 import psycopg2
+import csv
 from config import load_config
 
 # ==========================
