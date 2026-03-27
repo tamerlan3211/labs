@@ -28,12 +28,12 @@ def insert_data(name, surname, phone):
 # ==========================
 # INSERT FROM CSV
 # ==========================
-def insert_from_csv(filename):
+def insert_from_csv("users.csv"):
     config = load_config()
     try:
         with psycopg2.connect(**config) as conn:
             with conn.cursor() as cur:
-                with open(filename, 'r', encoding='utf-8') as file:
+                with open(users, 'r', encoding='utf-8') as file:
                     reader = csv.reader(file)
                     next(reader)  # skip header
                     for row in reader:
