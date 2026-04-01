@@ -29,21 +29,29 @@ def insert_data(name, surname, phone):
 # ==========================
 # INSERT FROM CSV
 # ==========================
+<<<<<<< HEAD
 
 
 
 
 def insert_from_csv(filename):
     print("yo oyoyoy oyo")
+=======
+def insert_from_csv("users.csv"):
+>>>>>>> bde7c7d02687af68959837ff543b1008bd37368d
     config = load_config()
     print("yo oyoyoy oyo 3")
     try:
         with psycopg2.connect(**config) as conn:
             print("here 0")
             with conn.cursor() as cur:
+<<<<<<< HEAD
                 print("here 1")
                 with open(filename, 'r', encoding='utf-8') as file:
                     print("here 2")
+=======
+                with open(users, 'r', encoding='utf-8') as file:
+>>>>>>> bde7c7d02687af68959837ff543b1008bd37368d
                     reader = csv.reader(file)
                     next(reader)  
                     for row in reader:
