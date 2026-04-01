@@ -1,4 +1,5 @@
 import psycopg2
+import csv
 from config import load_config
 
 # ==========================
@@ -28,15 +29,25 @@ def insert_data(name, surname, phone):
 # ==========================
 # INSERT FROM CSV
 # ==========================
+
+
+
+
 def insert_from_csv(filename):
+    print("yo oyoyoy oyo")
     config = load_config()
+    print("yo oyoyoy oyo 3")
     try:
         with psycopg2.connect(**config) as conn:
+            print("here 0")
             with conn.cursor() as cur:
+                print("here 1")
                 with open(filename, 'r', encoding='utf-8') as file:
+                    print("here 2")
                     reader = csv.reader(file)
-                    next(reader)  # skip header
+                    next(reader)  
                     for row in reader:
+                        print("Importing row:", row)
                         cur.execute(
                             "INSERT INTO lalab(name, surname, phone) VALUES (%s, %s, %s);",
                             (row[0], row[1], row[2])
