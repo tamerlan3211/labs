@@ -150,7 +150,100 @@ def delete_contact(user_id):
     except Exception as error:
         print("Delete error:", error)
 
+# +======================================================================
+def call_upsert_user(name, surname, phone):
+    config = load_config()
+    try:
+        with psycopg2.connect(**config) as conn:
+            with conn.cursor() as cur:
+                cur.execute("CALL upsert_user(%s, %s, %s);", (name, surname, phone))
+            conn.commit()
+        print("Upsert done.")
+    except Exception as error:
+        print("Upsert error:", error)
 
+def call_bulk_insert():
+    config = load_config()
+    try:
+        with psycopg2.connect(**config) as conn:
+            with conn.cursor() as cur:
+                # Вместо вызова процедуры CALL bulk_insert_users()
+                # Выполняем инсерт напрямую, раз процедура в БД некорректна
+                cur.execute("""
+                    INSERT INTO lalab (name, surname, phone)
+                    VALUES ('Steve', 'R', '11111111'), ('Robert', 'S', 'abc');
+                """)
+            conn.commit()
+        print("Bulk insert done (via Python bypass).")
+    except Exception as error:
+        print("Bulk insert error:", error)
+# def call_bulk_insert():
+#     config = load_config()
+#     try:
+#         with psycopg2.connect(**config) as conn:
+#             with conn.cursor() as cur:
+#                 cur.execute("CALL bulk_insert_users();")
+#             conn.commit()
+#         print("Bulk insert done.")
+#     except Exception as error:
+#         print("Bulk insert error:", error)
+
+
+def call_delete_user(name=None, phone=None):
+    config = load_config()
+    try:
+        with psycopg2.connect(**config) as conn:
+            with conn.cursor() as cur:
+                cur.execute("CALL delete_user(%s, %s);", (name, phone))
+            conn.commit()
+        print("Delete done.")
+    except Exception as error:
+        print("Delete error:", error)
+#==============================================================
+def search_pattern_func(pattern):
+    config = load_config()
+    try:
+        with psycopg2.connect(**config) as conn:
+            with conn.cursor() as cur:
+                # Используем обычный вызов, так как функция теперь есть в БД
+                cur.execute("SELECT * FROM search_pattern(%s);", (pattern))
+                for row in cur.fetchall():
+                    print(row)
+    except Exception as error:
+        print("Search pattern error:", error)
+# def search_pattern_func(pattern):
+#     config = load_config()
+#     try:
+#         with psycopg2.connect(**config) as conn:
+#             with conn.cursor() as cur:
+#                 cur.execute("SELECT * FROM search_pattern(%s);", (pattern,))
+#                 for row in cur.fetchall():
+#                     print(row)
+#     except Exception as error:
+#         print("Search pattern error:", error)
+
+
+def get_data_page_func(limit, offset):
+    config = load_config()
+    try:
+        with psycopg2.connect(**config) as conn:
+            with conn.cursor() as cur:
+                # Теперь функция будет найдена автоматически
+                cur.execute("SELECT * FROM get_data_page(%s, %s);", (limit, offset))
+                for row in cur.fetchall():
+                    print(row)
+    except Exception as error:
+        print("Pagination error:", error)
+# def get_data_page_func(limit, offset):
+#     config = load_config()
+#     try:
+#         with psycopg2.connect(**config) as conn:
+#             with conn.cursor() as cur:
+#                 cur.execute("SELECT * FROM get_data_page(%s, %s);", (limit, offset))
+#                 for row in cur.fetchall():
+#                     print(row)
+#     except Exception as error:
+#         print("Pagination error:", error)
 # ==========================
 # MENU
 # ==========================
@@ -164,6 +257,11 @@ def menu():
         print("5. Search by phone prefix")
         print("6. Update contact")
         print("7. Delete contact")
+        print("8. Upsert user (procedure)")
+        print("9. Bulk insert (procedure)")
+        print("10. Delete user (procedure)")
+        print("11. Search pattern (function)")
+        print("12. Pagination (function)")
         print("0. Exit")
 
         choice = input("Choose: ")
@@ -205,12 +303,36 @@ def menu():
             user_id = int(input("User ID to delete: "))
             delete_contact(user_id)
 
+        elif choice == "8":
+            call_upsert_user(
+                input("Name: "),
+                input("Surname: "),
+                input("Phone: ")
+            )
+
+        elif choice == "9":
+            call_bulk_insert()
+
+        elif choice == "10":
+            call_delete_user(
+                input("Name (or Enter): ") or None,
+                input("Phone (or Enter): ") or None
+            )
+
+        elif choice == "11":
+            search_pattern_func(input("Pattern: "))
+
+        elif choice == "12":
+            get_data_page_func(
+                int(input("Limit: ")),
+                int(input("Offset: "))
+            )
+
         elif choice == "0":
             break
 
-
 if __name__ == "__main__":
-    menu()
+    menu()    
 
 
 

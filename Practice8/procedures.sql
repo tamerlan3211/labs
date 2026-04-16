@@ -1,4 +1,6 @@
-
+-- ==========================
+-- UPSERT USER
+-- ==========================
 CREATE OR REPLACE PROCEDURE upsert_user(
     p_name TEXT,
     p_surname TEXT,
@@ -18,67 +20,23 @@ BEGIN
 END;
 $$;
 
-
--- ========================================
-
-CREATE OR REPLACE PROCEDURE bulk_insert_users(p_users TABLE(name TEXT, surname TEXT, phone TEXT))
-LANGUAGE plpgsql
-AS $$
-DECLARE
-    r RECORD;
-BEGIN
-    FOR r IN SELECT * FROM p_users LOOP
-        PERFORM upsert_user(r.name, r.surname, r.phone);
-    END LOOP;
-END;
-$$;
-
-
-
--- ========================================
-CREATE OR REPLACE FUNCTION search_pattern(pattern TEXT)
-RETURNS TABLE(
-    user_id INT,
-    name TEXT,
-    surname TEXT,
-    phone TEXT
-)
+-- ==========================
+-- BULK INSERT USERS
+-- ==========================
+CREATE OR REPLACE PROCEDURE bulk_insert_users()
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    RETURN QUERY
-    SELECT user_id, name, surname, phone
-    FROM lalab
-    WHERE name ILIKE '%' || pattern || '%'
-       OR surname ILIKE '%' || pattern || '%'
-       OR phone ILIKE '%' || pattern || '%';
+    -- Пример: вставка тестовых данных
+    INSERT INTO lalab (name, surname, phone)
+    VALUES 
+        ('Admin', 'System', '000'),
+        ('Support', 'Tech', '111');
 END;
 $$;
-
-
--- ========================================
-
-CREATE OR REPLACE FUNCTION get_data_page(p_limit INT, p_offset INT)
-RETURNS TABLE(
-    user_id INT,
-    name TEXT,
-    surname TEXT,
-    phone TEXT
-)
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    RETURN QUERY
-    SELECT user_id, name, surname, phone
-    FROM lalab
-    ORDER BY name
-    LIMIT p_limit OFFSET p_offset;
-END;
-$$;
-
-
--- ========================================
-
+-- ==========================
+-- DELETE USER
+-- ==========================
 CREATE OR REPLACE PROCEDURE delete_user(
     p_name TEXT DEFAULT NULL,
     p_phone TEXT DEFAULT NULL

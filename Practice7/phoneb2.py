@@ -30,43 +30,6 @@ def insert_data(name, surname, phone):
 # INSERT FROM CSV
 # ==========================
 
-
-# def insert_from_csv(filename):
-#     config = load_config()
-#     inserted_count = 0
-
-#     try:
-#         with psycopg2.connect(**config) as conn:
-#             with conn.cursor() as cur:
-#                 with open(filename, 'r', encoding='utf-8') as file:  # для твоего CSV с латиницей
-#                     reader = csv.reader(file)
-#                     next(reader, None)  # пропускаем заголовок
-
-#                     for i, row in enumerate(reader, start=1):
-#                         if len(row) < 3:
-#                             print(f"Row {i} пропущена: не хватает колонок -> {row}")
-#                             continue
-#                         try:
-#                             cur.execute(
-#                                 "INSERT INTO lalab(name, surname, phone) VALUES (%s, %s, %s);",
-#                                 (row[0], row[1], row[2])
-#                             )
-#                             inserted_count += 1
-#                             print(f"Вставлена строка {i}: {row}")
-#                         except Exception as e:
-#                             print(f"Строка {i} пропущена из-за ошибки:", row, e)
-
-#             conn.commit()
-#         print(f"CSV import completed. Всего вставлено: {inserted_count} строк.")
-
-#     except FileNotFoundError:
-#         print(f"CSV файл не найден: {filename}")
-#     except Exception as error:
-#         import traceback
-#         print("CSV import error:")
-#         traceback.print_exc()
-
-
 def insert_from_csv(filename):
     print("yo oyoyoy oyo")
     config = load_config()
