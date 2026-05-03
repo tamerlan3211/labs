@@ -13,7 +13,7 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 
 def main():
-    radius = 5
+    radius = 10
     drawing = False
     mode = 'brush'  # Режимы: brush, rectangle, circle, eraser
     color = BLUE

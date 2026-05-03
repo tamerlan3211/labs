@@ -39,7 +39,7 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
         self.image = pygame.Surface((40, 70))
-        self.image.fill(RED) # Заглушка, можно заменить на pygame.image.load("Enemy.png") не смог установить картинку 
+        self.image.fill(RED)
         self.rect = self.image.get_rect()
         self.rect.center = (random.randint(40, SCREEN_WIDTH-40), 0)
 

@@ -15,7 +15,7 @@ def main():
     radius = 25
     x = WIDTH // 2
     y = HEIGHT // 2
-    speed = 20 # Можно сделать чуть быстрее :)
+    speed = 10 # Можно сделать чуть быстрее :)
 
     clock = pygame.time.Clock()
 
